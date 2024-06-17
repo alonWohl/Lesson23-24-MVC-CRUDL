@@ -15,11 +15,26 @@ function render() {
             <td>${book.title}</td>
             <td>${book.price}</td>
             <td>
-                <button class"read">Read</button>
-                <button class"update">Update</button>
-                <button class"delete">Delete</button>
+                <button onclick="" class"read">Read</button>
+                <button onclick="onUpdateBook()" class"update">Update</button>
+                <button onclick="onRemoveBook()" class"delete">Delete</button>
             </td>
         </tr>
     `
     ) .join('')
+}
+
+function onRemoveBook(){
+removeBook()
+render()
+}
+
+function onUpdateBook(){
+updatPrice()
+render()
+}
+
+function onAddBook(){
+onAddBook()
+render()
 }
