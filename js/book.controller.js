@@ -33,7 +33,7 @@ function onRemoveBook(ev, bookId) {
 }
 
 function onUpdateBook(bookId) {
-  const newPrice = prompt('Enter New Price :')
+  const newPrice = +prompt('Enter New Price: ')
   updatePrice(bookId, newPrice)
   render()
 }
@@ -41,18 +41,25 @@ function onUpdateBook(bookId) {
 function onAddBook(ev) {
   ev.preventDefault()
 
-  const elInput = document.querySelector('.add-book input')
-  const title = elInput.value
-  const price = prompt('Enter Price: ')
-  
-  addBook(title,price)
+  const elModal = document.querySelector('.add-book')
+  const elNameInput = document.querySelector('.name-input')
+  const elPriceInput = document.querySelector('.price-input')
+  if (!elModal.open) {
+    elNameInput.value = ''
+    elPriceInput.value = ''
+    elModal.showModal()
+} else {
+    const title = elNameInput.value
+    const price = elPriceInput.value
 
-  elInput.value = ''
-  render()
+    if (!title || price < 0 || isNaN(price)) return
 
+    addBook(title, price)
+    render()
+    elModal.close()
 }
-
-function onShowBookDetails(ev,bookId){
+}
+function onShowBookDetails(ev, bookId) {
   ev.stopPropagation()
 
   const elDetails = document.querySelector('.book-details')
@@ -62,5 +69,4 @@ function onShowBookDetails(ev,bookId){
 
   elPre.innerText = JSON.stringify(book, null, 2)
   elDetails.showModal()
-
 }

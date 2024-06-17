@@ -10,12 +10,9 @@
 
     <header>
         <h1>Book Shop</h1>
+        <button onclick="onAddBook(event)">Add Book</button>
     </header>
-    <form onsubmit="onAddBook(event)" class="add-book">
-        <input type="text" autofocus placeholder="Book To Add"> 
-        <button>Add</button>
-    </form>
-
+    
     <table>
         <thead>
             <tr>
@@ -28,7 +25,17 @@
 
         </tbody>
     </table>
-    
+
+    <dialog class="add-book">
+        <form onsubmit="onAddBook(event)" method="dialog">
+            <h2>Add New Book</h2>
+            <input type="text" name="title" class="name-input" placeholder="Title" required>
+            <input type="number" name="price" class="price-input" placeholder="Price" required>
+            <button type="submit">Add</button>
+            <button type="button" onclick="this.closest('dialog').close()">Cancel</button>
+        </form>
+    </dialog>
+
     <dialog class="book-details">
         <form method="dialog">
             <h2>Book Details</h2>
