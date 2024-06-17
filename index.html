@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/book-css.css">
     <title>Book Shop</title>
 </head>
 <body onload="onInit()">
+
     <form onsubmit="onAddBook(event)" class="add-book">
         <input type="text" autofocus placeholder="Book To Add"> 
         <button>Add</button>
     </form>
+
     <table>
         <thead>
             <tr>
@@ -21,6 +24,15 @@
         <tbody>
         </tbody>
     </table>
+    
+    <dialog class="book-details">
+        <form method="dialog">
+            <h2>Book Details</h2>
+            <pre></pre>
+            <button>x</button>
+        </form>
+    </dialog>
+
     <script src="js/services/util.services.js"></script>
     <script src="js/services/book.service.js"></script>
     <script src="js/book.controller.js"></script>

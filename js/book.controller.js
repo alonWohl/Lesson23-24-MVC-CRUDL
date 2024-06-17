@@ -15,7 +15,7 @@ function render() {
             <td>${book.title}</td>
             <td>${book.price}</td>
             <td>
-                <button onclick="" class"read">Read</button>
+                <button onclick="onShowBookDetails(event,'${book.id}')" class"read">Read</button>
                 <button onclick="onUpdateBook('${book.id}')" class"update">Update</button>
                 <button onclick="onRemoveBook(event,'${book.id}')" class"delete">Delete</button>
             </td>
@@ -49,5 +49,18 @@ function onAddBook(ev) {
 
   elInput.value = ''
   render()
+
+}
+
+function onShowBookDetails(ev,bookId){
+  ev.stopPropagation()
+
+  const elDetails = document.querySelector('.book-details')
+  const elPre = elDetails.querySelector('.book-details pre')
+
+  const book = getBookById(bookId)
+
+  elPre.innerText = JSON.stringify(book, null, 2)
+  elDetails.showModal()
 
 }
