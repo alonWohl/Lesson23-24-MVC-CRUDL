@@ -7,3 +7,27 @@ body{
     font-family: Verdana, Geneva, Tahoma, sans-serif; 
 }
 
+header{
+    text-align: center;
+}
+
+thead{
+    background-color: lightblue;
+}
+td ,th{
+    padding:10px;
+    border: 1px solid black;
+    width: 100vw;
+}
+tbody{
+        background-color: lightcyan;
+}
+
+table button{
+    padding: 10px;
+    border-radius: 5px;
+    background-color: lightblue;
+    border: none;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    width: 32%;
+}
