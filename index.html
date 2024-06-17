@@ -12,7 +12,12 @@
         <h1>Book Shop</h1>
         <button onclick="onAddBook(event)">Add Book</button>
     </header>
-    
+
+    <div>
+        <input type="text" class="search-input" placeholder="Search by title" oninput="onSetFilterBy(this)" />
+        <button onclick="clearSearch()">Clear</button>
+      </div>
+
     <table>
         <thead>
             <tr>

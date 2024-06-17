@@ -1,11 +1,13 @@
 'use strict'
 
+var gFilterBy = ''
+
 function onInit() {
   render()
 }
 
 function render() {
-  const books = getBooks()
+  const books = getBooks(gFilterBy)
   const tableBody = document.querySelector('tbody')
 
   tableBody.innerHTML = books
@@ -44,11 +46,12 @@ function onAddBook(ev) {
   const elModal = document.querySelector('.add-book')
   const elNameInput = document.querySelector('.name-input')
   const elPriceInput = document.querySelector('.price-input')
+
   if (!elModal.open) {
     elNameInput.value = ''
     elPriceInput.value = ''
     elModal.showModal()
-} else {
+  } else {
     const title = elNameInput.value
     const price = elPriceInput.value
 
@@ -57,8 +60,9 @@ function onAddBook(ev) {
     addBook(title, price)
     render()
     elModal.close()
+  }
 }
-}
+
 function onShowBookDetails(ev, bookId) {
   ev.stopPropagation()
 
@@ -69,4 +73,14 @@ function onShowBookDetails(ev, bookId) {
 
   elPre.innerText = JSON.stringify(book, null, 2)
   elDetails.showModal()
+}
+
+function onSetFilterBy(elSelect) {
+  gFilterBy = elSelect.value
+  render()
+}
+
+function clearSearch(){
+  onSetFilterBy('')
+document.querySelector('.search-input').value =''  
 }

@@ -3,8 +3,10 @@
 var gBooks = []
 _createBooks()
 
-function getBooks() {
-  return gBooks
+function getBooks(filterBy) {
+  if (!filterBy) return gBooks  
+  const filteredBooks = gBooks.filter(book => book.title.toLowerCase().includes(gFilterBy.toLowerCase()))
+return filteredBooks
 }
 
 function getBookById(bookId) {         
