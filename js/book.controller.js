@@ -16,8 +16,8 @@ function render() {
             <td>${book.price}</td>
             <td>
                 <button onclick="" class"read">Read</button>
-                <button onclick="onUpdateBook(${book.id})" class"update">Update</button>
-                <button onclick="onRemoveBook(${book.id})" class"delete">Delete</button>
+                <button onclick="onUpdateBook('${book.id}')" class"update">Update</button>
+                <button onclick="onRemoveBook(event,'${book.id}')" class"delete">Delete</button>
             </td>
         </tr>
     `
@@ -25,7 +25,9 @@ function render() {
     .join('')
 }
 
-function onRemoveBook(bookId) {
+function onRemoveBook(ev, bookId) {
+  ev.stopPropagation()
+
   removeBook(bookId)
   render()
 }
@@ -34,10 +36,18 @@ function onUpdateBook(bookId) {
   const newPrice = prompt('Enter New Price :')
   updatePrice(bookId, newPrice)
   render()
-
 }
 
-function onAddBook() {
-  onAddBook()
+function onAddBook(ev) {
+  ev.preventDefault()
+
+  const elInput = document.querySelector('.add-book input')
+  const title = elInput.value
+  const price = prompt('Enter Price: ')
+  
+  addBook(title,price)
+
+  elInput.value = ''
   render()
+
 }

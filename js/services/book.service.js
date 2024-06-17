@@ -2,17 +2,17 @@
 
 const gBooks = [
   {
-    id: 1,
+    id: makeid(),
     title: 'The Adventures of Lori Ipsi',
     price: 120,
   },
   {
-    id: 2,
+    id: makeid(),
     title: 'World Atlas',
     price: 300,
   },
   {
-    id: 3,
+    id: makeid(),
     title: 'Zorba the Greek',
     price: 87,
   },
@@ -28,6 +28,16 @@ function removeBook(bookId) {
 }
 
 function updatePrice(bookId, newPrice) {
-	const book = gBooks.find(todo => todo.id === bookId)
-    book.price = newPrice
+  const book = gBooks.find((todo) => todo.id === bookId)
+  book.price = newPrice
+}
+
+function addBook(title,price) {
+  const id = makeid()
+  const book = {
+    id: `${id}`,
+    title,
+    price,
+  } 
+  gBooks.push(book)
 }
