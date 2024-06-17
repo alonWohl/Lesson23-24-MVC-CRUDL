@@ -16,25 +16,28 @@ function render() {
             <td>${book.price}</td>
             <td>
                 <button onclick="" class"read">Read</button>
-                <button onclick="onUpdateBook()" class"update">Update</button>
-                <button onclick="onRemoveBook()" class"delete">Delete</button>
+                <button onclick="onUpdateBook(${book.id})" class"update">Update</button>
+                <button onclick="onRemoveBook(${book.id})" class"delete">Delete</button>
             </td>
         </tr>
     `
-    ) .join('')
+    )
+    .join('')
 }
 
-function onRemoveBook(){
-removeBook()
-render()
+function onRemoveBook(bookId) {
+  removeBook(bookId)
+  render()
 }
 
-function onUpdateBook(){
-updatPrice()
-render()
+function onUpdateBook(bookId) {
+  const newPrice = prompt('Enter New Price :')
+  updatePrice(bookId, newPrice)
+  render()
+
 }
 
-function onAddBook(){
-onAddBook()
-render()
+function onAddBook() {
+  onAddBook()
+  render()
 }
