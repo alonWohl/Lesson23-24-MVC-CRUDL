@@ -1,9 +1,9 @@
 'use strict'
 
-var gBooks 
+var gBooks
 _createBooks()
 
-function getBooks(options ={}) {
+function getBooks(options = {}) {
   const filterBy = options.filterBy
   const sortBy = options.sortBy
   const page = options.page
@@ -16,8 +16,12 @@ function getBooks(options ={}) {
 
 function _filterBooks(filterBy) {
   var books = gBooks
-  if (filterBy.title) books = books.filter(book => book.title.toLowerCase().includes(filterBy.title.toLowerCase()))
-  if (filterBy.minRating) books = books.filter(book => book.rating >= filterBy.minRating)
+  if (filterBy.title)
+    books = books.filter((book) =>
+      book.title.toLowerCase().includes(filterBy.title.toLowerCase())
+    )
+  if (filterBy.minRating)
+    books = books.filter((book) => book.rating >= filterBy.minRating)
   return books
 }
 
@@ -33,11 +37,11 @@ function removeBook(bookId) {
   _saveBooks()
 }
 
-function updatePrice(bookId,newTitle,newPrice,newImgUrl) {
+function updatePrice(bookId, newTitle, newPrice, newImgUrl) {
   const book = getBookById(bookId)
-  book.title =newTitle
+  book.title = newTitle
   book.price = newPrice
-  book.imgUrl =newImgUrl
+  book.imgUrl = newImgUrl
 
   _saveBooks()
 }
@@ -57,7 +61,7 @@ function _createBook(title, price, imgUrl) {
     price,
     details: ` ${loremIpsum(50)}`,
     imgUrl: imgUrl || 'img/default_book_cover.jpg',
-    rating : getRandomIntInclusive(1,5)
+    rating: getRandomIntInclusive(1, 5),
   }
 }
 
@@ -69,14 +73,16 @@ function _createBooks() {
     'A Song of Ice and Fire',
     'A Clash of Kings',
     'A Storm of Swords',
+    'A Feast for Crows',
+    'A Dance with Dragons',
   ]
   for (let i = 0; i < 10; i++) {
-    const bookTitle = bookNames[getRandomIntInclusive(0,2)]
-    
+    const bookTitle = bookNames[getRandomIntInclusive(0,4)]
+
     const book = _createBook(
       bookTitle,
       getRandomIntInclusive(0, 500),
-      `img/got${bookNames.indexOf(bookTitle)+1}.jpg`
+      `img/got${bookNames.indexOf(bookTitle) + 1}.jpg`
     )
     gBooks.push(book)
   }
