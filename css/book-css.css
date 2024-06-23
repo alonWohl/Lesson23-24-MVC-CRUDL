@@ -1,33 +1,127 @@
-*{
+* {
     box-sizing: border-box;
 }
 
-body{
-    margin: 0;
-    font-family: Verdana, Geneva, Tahoma, sans-serif; 
+:root {
+    --primary-color: #7D78A3;
+    --secondary-color: #A29CBB;
 }
 
-header{
+body {
+    margin: 0;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-color: hsl(247, 19%, 85%);
+    height: 100vh;
+    width: 100vw;
+    overflow-x: hidden;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+header {
+    width: 100vw;
+    background-color: var(--primary-color);
     text-align: center;
 }
 
-thead{
-    background-color: lightblue;
-}
-td ,th{
-    padding:10px;
-    border: 1px solid black;
-    width: 100vw;
-}
-tbody{
-        background-color: lightcyan;
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: var(--primary-color);
+    color: white;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
 }
 
-table button{
+table {
+    border-radius: 5px;
+    padding: 10px;
+    width: 90%;
+    min-width: 850px;
+    max-width: 1300px;
+    font-size: 1.2rem;
+    box-shadow: 0px 0px 5px 0px #00000091;
+    margin-top: 10px;
+}
+
+thead {
+    height: 20%;
+    background-color: var(--secondary-color);
+}
+
+td {
+    border: 1px solid var(--secondary-color);
+    height: 50px;
+    min-width: 212px;
+    max-width: 325px;
+}
+
+tbody {
+    height: 70%;
+    min-height: 70%;
+    background-color: var(--secondary-color);
+}
+
+input {
+    padding: 10px;
+    width: 200px;
+}
+
+button {
     padding: 10px;
     border-radius: 5px;
-    background-color: lightblue;
+    background-color: #7D78A3;
     border: none;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    width: 32%;
+    width: 90px;
+}
+
+.book-details {
+    border: 0;
+    padding: 0;
+    background-color: var(--secondary-color);
+    width: 675px;
+    /* height: 450px; */
+    border-radius: 15px;
+    border: 1px solid #00000030;
+    color: whitesmoke;
+}
+
+.book-details form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    font-size: clamp(13px, 1.1vw, 14px);
+    overflow: hidden;
+    padding: 30px 0px;
+}
+
+.book-cover-img {
+    flex-basis: 50%;
+    box-shadow: 5px 5px 50px -1px #ffffff;
+}
+
+.book-desc {
+    flex-basis: 50%;
+    padding-inline-end: 20px;
+}
+
+.book-desc .title {
+    font-size: 25px;
+    font-weight: 500;
+}
+
+img {
+    width: 100%;
 }

@@ -25,6 +25,7 @@ function render() {
     `
     )
     .join('')
+  renderStatics(books)
 }
 
 function onRemoveBook(ev, bookId) {
@@ -35,7 +36,11 @@ function onRemoveBook(ev, bookId) {
 }
 
 function onUpdateBook(bookId) {
-  const newPrice = +prompt('Enter New Price: ')
+  const currBook = getBookById(bookId)
+  const newPrice = +prompt(
+    `Current price is: ${currBook.price} Enter New Price: `
+  )
+  if (!newPrice) return
   updatePrice(bookId, newPrice)
   render()
 }
@@ -46,7 +51,6 @@ function onAddBook(ev) {
   const elModal = document.querySelector('.add-book')
   const elNameInput = document.querySelector('.name-input')
   const elPriceInput = document.querySelector('.price-input')
-
   if (!elModal.open) {
     elNameInput.value = ''
     elPriceInput.value = ''
@@ -57,7 +61,7 @@ function onAddBook(ev) {
 
     if (!title || price < 0 || isNaN(price)) return
 
-    addBook(title, price)
+    addBook(title, price, imgUrl)
     render()
     elModal.close()
   }
@@ -66,13 +70,14 @@ function onAddBook(ev) {
 function onShowBookDetails(ev, bookId) {
   ev.stopPropagation()
 
-  const elDetails = document.querySelector('.book-details')
-  const elPre = elDetails.querySelector('.book-details pre')
-
   const book = getBookById(bookId)
+  const elBookModal = document.querySelector('.book-details')
 
-  elPre.innerText = JSON.stringify(book, null, 2)
-  elDetails.showModal()
+  elBookModal.querySelector('.book-cover-img img').src = book.imgUrl
+  elBookModal.querySelector('.book-desc h3').innerText = book.title
+  elBookModal.querySelector('.book-desc p').innerText = book.details
+
+  elBookModal.showModal()
 }
 
 function onSetFilterBy(elSelect) {
@@ -80,7 +85,27 @@ function onSetFilterBy(elSelect) {
   render()
 }
 
-function clearSearch(){
+function clearSearch() {
   onSetFilterBy('')
-document.querySelector('.search-input').value =''  
+  document.querySelector('.search-input').value = ''
+}
+
+function renderStatics(books) {
+  var average = 0
+  var expensive = 0
+  var cheap = 0
+
+  books.forEach((book) => {
+    if (book.price > 200) {
+      expensive++
+    }
+    if (book.price >= 80 && book.price <= 200) {
+      average++
+    }
+    if (book.price < 80) {
+      cheap++
+    }
+  })
+  const elStats = document.querySelector('footer')
+  elStats.innerHTML = `Expensive : ${expensive} Average : ${average} Cheap : ${cheap}`
 }
