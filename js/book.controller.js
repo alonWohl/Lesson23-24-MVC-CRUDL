@@ -1,6 +1,7 @@
 'use strict'
 
 var gFilterBy = ''
+var gBookToEdit = null
 
 function onInit() {
   render()
@@ -36,35 +37,62 @@ function onRemoveBook(ev, bookId) {
 }
 
 function onUpdateBook(bookId) {
-  const currBook = getBookById(bookId)
-  const newPrice = +prompt(
-    `Current price is: ${currBook.price} Enter New Price: `
-  )
-  if (!newPrice) return
-  updatePrice(bookId, newPrice)
+  gBookToEdit = null
+  const elModal = document.querySelector('.add-book')
+  const elNameInput = elModal.querySelector('.name-input')
+  const elPriceInput = elModal.querySelector('.price-input')
+  const elUrlInput = elModal.querySelector('input[type="url"]')
+
+  const book = getBookById(bookId)
+
+  elNameInput.value = book.title
+  elPriceInput.value = book.price
+  elUrlInput.value = book.imgUrl
+
+  gBookToEdit = book
+  elModal.showModal()
+}
+
+function onSaveBook() {
+  const elModal = document.querySelector('.add-book')
+  const elNameInput = elModal.querySelector('.name-input')
+  const elPriceInput = elModal.querySelector('.price-input')
+  const elUrlInput = elModal.querySelector('input[type="url"]')
+
+  const title = elNameInput.value
+  const price = elPriceInput.value
+  const imgUrl = elUrlInput.value
+
+  if (gBookToEdit) {
+    updatePrice(title, price, imgUrl)
+  } else {
+    addBook(title, price, imgUrl)
+  }
+
   render()
 }
 
-function onAddBook(ev) {
-  ev.preventDefault()
-
+function onAddBookModal() {
+  gBookToEdit = null
+  resetBookModal()
   const elModal = document.querySelector('.add-book')
-  const elNameInput = document.querySelector('.name-input')
-  const elPriceInput = document.querySelector('.price-input')
-  if (!elModal.open) {
-    elNameInput.value = ''
-    elPriceInput.value = ''
-    elModal.showModal()
-  } else {
-    const title = elNameInput.value
-    const price = elPriceInput.value
+  elModal.showModal()
+}
 
-    if (!title || price < 0 || isNaN(price)) return
+function onCloseBookModal() {
+  const elModal = document.querySelector('.add-book')
+  elModal.close()
+}
 
-    addBook(title, price, imgUrl)
-    render()
-    elModal.close()
-  }
+function resetBookModal() {
+  const elModal = document.querySelector('.add-book')
+  const elNameInput = elModal.querySelector('.name-input')
+  const elPriceInput = elModal.querySelector('.price-input')
+  const elUrlInput = elModal.querySelector('input[type="url"]');
+
+  elNameInput.value = ''
+  elPriceInput.value = ''
+  elUrlInput.value = ''
 }
 
 function onShowBookDetails(ev, bookId) {
@@ -78,6 +106,10 @@ function onShowBookDetails(ev, bookId) {
   elBookModal.querySelector('.book-desc p').innerText = book.details
 
   elBookModal.showModal()
+}
+function onCloseBookDetails() {
+  const elBookModal = document.querySelector('.book-details')
+  elBookModal.close()
 }
 
 function onSetFilterBy(elSelect) {

@@ -20,20 +20,22 @@
           oninput="onSetFilterBy(this)"
         />
         <button onclick="clearSearch()">Clear</button>
-        <button onclick="onAddBook(event)">Add Book</button>
+        <button onclick="onAddBookModal()">Add Book</button>
       </div>
 
       <table>
         <thead>
-          <th>Title</th>
-          <th>Price</th>
-          <th>Actions</th>
+          <tr>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Actions</th>
+          </tr>
         </thead>
         <tbody></tbody>
       </table>
 
       <dialog class="add-book">
-        <form onsubmit="onAddBook(event)" method="dialog">
+        <form onsubmit="onSaveBook()" method="dialog">
           <h2>Add New Book</h2>
           <input
             type="text"
@@ -49,22 +51,28 @@
             placeholder="Price"
             required
           />
+          <input
+            type="url"
+            name="imgUrl"
+            class="url-input"
+            placeholder="Image URL"
+            required
+          />
           <button type="submit">Add</button>
-          <button type="button" onclick="this.closest('dialog').close()">
-            Cancel
-          </button>
+          <button type="button" onclick="onCloseBookModal()">Cancel</button>
         </form>
       </dialog>
 
       <dialog class="book-details">
         <form method="dialog">
-            <div class="book-cover-img">
-                <img src="" />
-            </div>
-            <div class="book-desc">
-                <h3 class="title"></h3>
-                <p class="desc"></p>
-                <button class="close">✖</button>
+          <div class="book-cover-img">
+            <img src="" alt="Book Cover" />
+          </div>
+          <div class="book-desc">
+            <h3 class="title"></h3>
+            <p class="desc"></p>
+            <button class="close" onclick="onCloseBookDetails()">✖</button>
+          </div>
         </form>
       </dialog>
       <footer></footer>

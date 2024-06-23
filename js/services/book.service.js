@@ -1,17 +1,19 @@
 'use strict'
 
-var gBooks = []
+var gBooks 
 _createBooks()
 
 function getBooks(filterBy) {
-  if (!filterBy) return gBooks  
-  const filteredBooks = gBooks.filter(book => book.title.toLowerCase().includes(gFilterBy.toLowerCase()))
-return filteredBooks
+  if (!filterBy) return gBooks
+  const filteredBooks = gBooks.filter((book) =>
+    book.title.toLowerCase().includes(gFilterBy.toLowerCase())
+  )
+  return filteredBooks
 }
 
-function getBookById(bookId) {         
-	const book = gBooks.find(book => book.id === bookId)
-	return book
+function getBookById(bookId) {
+  const book = gBooks.find((book) => book.id === bookId)
+  return book
 }
 
 function removeBook(bookId) {
@@ -19,43 +21,57 @@ function removeBook(bookId) {
   gBooks.splice(idx, 1)
 
   _saveBooks()
-
 }
 
-function updatePrice(bookId, newPrice) {
+function updatePrice(bookId,newTitle,newPrice,newImgUrl) {
   const book = getBookById(bookId)
+  book.title =newTitle
   book.price = newPrice
+  book.imgUrl =newImgUrl
 
   _saveBooks()
-
 }
 
-function addBook(title,price,imgUrl) {
-  const book = _createBook(title,price,imgUrl)
-  gBooks.push(book)
+function addBook(title, price, imgUrl) {
+  const book = _createBook(title, price, imgUrl)
+  gBooks.unshift(book)
 
   _saveBooks()
-
 }
 
-function _createBook(title,price,imgUrl){
+function _createBook(title, price, imgUrl) {
   const id = makeid()
-  return  {
+  return {
     id: `${id}`,
     title,
     price,
-    details:` ${loremIpsum(50)}`,
-    imgUrl: imgUrl || `https://islandpress.org/sites/default/files/default_book_cover_2015.jpg`
+    details: ` ${loremIpsum(50)}`,
+    imgUrl: imgUrl || 'img/default_book_cover.jpg'
   }
 }
 
-function _createBooks(){
+function _createBooks() {
   gBooks = loadFromStorage('books')
-  if(gBooks && gBooks.length > 0) return
-
-gBooks = [_createBook('A Song of Ice and Fire',120,`img/got1.jpg`), _createBook('A Clash of Kings',300,`img/got2.jpg`), _createBook('A Storm of Swords',87,`img/got3.jpg`)]
-    _saveBooks()
+  if (gBooks && gBooks.length > 0) return
+  gBooks = []
+  const bookNames = [
+    'A Song of Ice and Fire',
+    'A Clash of Kings',
+    'A Storm of Swords',
+  ]
+  for (let i = 0; i < 10; i++) {
+    const bookTitle = bookNames[getRandomIntInclusive(0,2)]
+    
+    const book = _createBook(
+      bookTitle,
+      getRandomIntInclusive(0, 500),
+      `img/got${bookNames.indexOf(bookTitle)+1}.jpg`
+    )
+    gBooks.push(book)
+  }
+  _saveBooks()
 }
+
 function _saveBooks() {
   saveToStorage('books', gBooks)
 }
