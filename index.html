@@ -11,27 +11,30 @@
       <header>
         <h1>Book Shop</h1>
       </header>
-      </div>
+
       <section class="book-filter">
         <fieldset>
-            <legend>Filter & Sorting</legend>
+          <legend>Filter & Sorting</legend>
+          <div class="filter-by">
+            <input oninput="onSetFilterBy({ title: this.value })" placeholder="Title:" type="text">
+            <label>
+              <span>Min Rating:</span>
+              <select name="Rating" onchange="onSetFilterBy({ minRating: this.value })">
+                <option value="">None</option>
+                <option value="1">⭐️</option>
+                <option value="2">⭐️⭐️</option>
+                <option value="3">⭐️⭐️⭐️</option>
+                <option value="4">⭐️⭐️⭐️⭐️</option>
+                <option value="5">⭐️⭐️⭐️⭐️⭐️</option>
+              </select>
+            </label>
+            <button onclick="clearSearch()">Clear</button>
+            <button onclick="onOpenAddBookModal()">Add Book</button>
+          </div>
+        </fieldset>
+      </section>
 
-            <div class="filter-by">
-                <input oninput="onSetFilterBy({ title: this.value })" placeholder="Title:" type="text">
-                <label>
-                    <span>Min Rating:</span>
-                  <select name="Rating" onchange="onSetFilterBy({ minRating: this.value })">
-                  <option value="">None</option>
-                  <option value="1">⭐️</option>
-                  <option value="2">⭐️⭐️</option>
-                  <option value="3">⭐️⭐️⭐️</option>
-                  <option value="4">⭐️⭐️⭐️⭐️</option>
-                  <option value="5">⭐️⭐️⭐️⭐️⭐️</option>
-                </select>
-                <button onclick="clearSearch()">Clear</button>
-                <button onclick="onAddBookModal()">Add Book</button>
-            </div>
-          </section>
+      <div class="msg"></div>
 
       <table>
         <thead>
@@ -48,26 +51,9 @@
       <dialog class="add-book">
         <form onsubmit="onSaveBook()" method="dialog">
           <h2>Add New Book</h2>
-          <input
-            type="text"
-            name="title"
-            class="name-input"
-            placeholder="Title"
-            required
-          />
-          <input
-            type="number"
-            name="price"
-            class="price-input"
-            placeholder="Price"
-            required
-          />
-          <input
-            type="url"
-            name="imgUrl"
-            class="url-input"
-            placeholder="Image URL"
-          />
+          <input type="text" name="title" class="name-input" placeholder="Title" required />
+          <input type="number" name="price" class="price-input" placeholder="Price" required />
+          <input type="url" name="imgUrl" class="url-input" placeholder="Image URL" />
           <button type="submit">Add</button>
           <button type="button" onclick="onCloseBookModal()">Cancel</button>
         </form>
@@ -79,15 +65,17 @@
             <img src="" alt="Book Cover" />
           </div>
           <div class="book-desc">
-            <h2>Rating:<span></span></h2>
+            <h2>Rating: <span></span></h2>
             <h3 class="title"></h3>
             <p class="desc"></p>
             <button class="close" onclick="onCloseBookDetails()">✖</button>
           </div>
         </form>
       </dialog>
+
       <footer></footer>
     </div>
+
     <script src="js/services/util.services.js"></script>
     <script src="js/services/storage.service.js"></script>
     <script src="js/services/book.service.js"></script>

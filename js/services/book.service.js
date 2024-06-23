@@ -39,11 +39,12 @@ function removeBook(bookId) {
 
 function updatePrice(bookId, newTitle, newPrice, newImgUrl) {
   const book = getBookById(bookId)
-  book.title = newTitle
+  book.title= newTitle
   book.price = newPrice
   book.imgUrl = newImgUrl
 
   _saveBooks()
+  return book
 }
 
 function addBook(title, price, imgUrl) {
@@ -51,6 +52,7 @@ function addBook(title, price, imgUrl) {
   gBooks.unshift(book)
 
   _saveBooks()
+  return book
 }
 
 function _createBook(title, price, imgUrl) {
