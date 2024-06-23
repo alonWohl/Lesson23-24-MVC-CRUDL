@@ -11,6 +11,15 @@ function getBooks(options = {}) {
   var books = gBooks
   books = _filterBooks(filterBy)
 
+  if (sortBy.title) {
+    books = books.sort((b1, b2) => b1.title.localeCompare(b2.title) * sortBy.title);
+  } else if (sortBy.rating) {
+    books = books.sort((b1, b2) => (b1.rating - b2.rating) * sortBy.rating);
+  } else if (sortBy.price) {
+    books = books.sort((b1, b2) => (b1.price - b2.price) * sortBy.price);
+  }
+
+
   return books
 }
 

@@ -73,13 +73,12 @@ function onSaveBook() {
   const elPriceInput = elModal.querySelector('.price-input')
   const elUrlInput = elModal.querySelector('input[type="url"]')
 
-
   const title = elNameInput.value
   const price = elPriceInput.value
   const imgUrl = elUrlInput.value
 
   if (gBookToEdit) {
-    var book = updatePrice(gBookToEdit.id,title, price, imgUrl)
+    var book = updatePrice(gBookToEdit.id, title, price, imgUrl)
   } else {
     var book = addBook(title, price, imgUrl)
   }
@@ -144,12 +143,34 @@ function onSetFilterBy(filterBy) {
   renderBooks()
 }
 
-function clearSearch() {
+function onSetSortBy() {
+  const elSortField = document.querySelector('.sort-by select')
+  const elSortDesc = document.querySelector('.sort-by .sort-desc')
+
+  const sortField = elSortField.value
+  const sortDir = elSortDesc.checked ? -1 : 1
+
+  gQueryOptions.sortBy = { [sortField]: sortDir }
+
+  gQueryOptions.page.idx = 0
+
+  renderBooks()
+}
+function clearFilterAndSort() {
   document.querySelector('.filter-by input[type="text"]').value = ''
   document.querySelector('.filter-by select').value = ''
 
-  gQueryOptions.filterBy.title = ''
-  gQueryOptions.filterBy.minRating = 0
+  const elSortField = document.querySelector('.sort-by select')
+  const elSortDesc = document.querySelector('.sort-by .sort-desc')
+  const elSortAsc = document.querySelector('.sort-by .sort-ascen')
+
+  elSortField.value = ''
+  elSortDesc.checked = false
+  elSortAsc.checked = false
+
+  gQueryOptions.filterBy = { title: '', minRating: 0 }
+  gQueryOptions.sortBy = {}
+  gQueryOptions.page.idx = 0
 
   renderBooks()
 }

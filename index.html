@@ -28,7 +28,24 @@
                 <option value="5">⭐️⭐️⭐️⭐️⭐️</option>
               </select>
             </label>
-            <button onclick="clearSearch()">Clear</button>
+            
+            <div class="sort-by">
+              <select onchange="onSetSortBy()">
+                <option value="">Select Sorting</option>
+                <option value="title">Title</option>
+                <option value="rating">Rating</option>
+                <option value="price">Price</option>
+              </select>
+              <label>
+                <span>Descending</span>
+                <input class="sort-desc" type="radio" name="sortOrder" oninput="onSetSortBy()" />
+              </label>
+              <label>
+                <span>Ascending</span>
+                <input class="sort-ascen" type="radio" name="sortOrder" oninput="onSetSortBy()" />
+              </label>
+            </div>
+            <button onclick="clearFilterAndSort()">Clear</button>
             <button onclick="onOpenAddBookModal()">Add Book</button>
           </div>
         </fieldset>
