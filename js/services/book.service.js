@@ -3,12 +3,22 @@
 var gBooks 
 _createBooks()
 
-function getBooks(filterBy) {
-  if (!filterBy) return gBooks
-  const filteredBooks = gBooks.filter((book) =>
-    book.title.toLowerCase().includes(gFilterBy.toLowerCase())
-  )
-  return filteredBooks
+function getBooks(options ={}) {
+  const filterBy = options.filterBy
+  const sortBy = options.sortBy
+  const page = options.page
+
+  var books = gBooks
+  books = _filterBooks(filterBy)
+
+  return books
+}
+
+function _filterBooks(filterBy) {
+  var books = gBooks
+  if (filterBy.title) books = books.filter(book => book.title.toLowerCase().includes(filterBy.title.toLowerCase()))
+  if (filterBy.minRating) books = books.filter(book => book.rating >= filterBy.minRating)
+  return books
 }
 
 function getBookById(bookId) {

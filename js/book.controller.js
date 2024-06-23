@@ -1,16 +1,19 @@
 'use strict'
 
-var gFilterBy = ''
+const gQueryOptions = {
+  filterBy: { title: '', minRating: 0 },
+  sortBy: {},
+  page: { idx: 0, size: 5 },
+}
 var gBookToEdit = null
 
 function onInit() {
-  render()
+  renderBooks()
 }
 
-function render() {
-  const books = getBooks(gFilterBy)
+function renderBooks() {
+  const books = getBooks(gQueryOptions)
   const tableBody = document.querySelector('tbody')
-  
 
   tableBody.innerHTML = books
     .map(
@@ -20,9 +23,15 @@ function render() {
             <td>${book.price}</td>
             <td>${'⭐️'.repeat(book.rating)}</td>
             <td>
-                <button onclick="onShowBookDetails(event,'${book.id}')" class"read">Read</button>
-                <button onclick="onUpdateBook('${book.id}')" class"update">Update</button>
-                <button onclick="onRemoveBook(event,'${book.id}')" class"delete">Delete</button>
+                <button onclick="onShowBookDetails(event,'${
+                  book.id
+                }')" class"read">Read</button>
+                <button onclick="onUpdateBook('${
+                  book.id
+                }')" class"update">Update</button>
+                <button onclick="onRemoveBook(event,'${
+                  book.id
+                }')" class"delete">Delete</button>
             </td>
         </tr>
     `
@@ -31,12 +40,11 @@ function render() {
   renderStatics(books)
 }
 
-
 function onRemoveBook(ev, bookId) {
   ev.stopPropagation()
 
   removeBook(bookId)
-  render()
+  renderBooks()
 }
 
 function onUpdateBook(bookId) {
@@ -72,7 +80,7 @@ function onSaveBook() {
     addBook(title, price, imgUrl)
   }
 
-  render()
+  renderBooks()
 }
 
 function onAddBookModal() {
@@ -91,7 +99,7 @@ function resetBookModal() {
   const elModal = document.querySelector('.add-book')
   const elNameInput = elModal.querySelector('.name-input')
   const elPriceInput = elModal.querySelector('.price-input')
-  const elUrlInput = elModal.querySelector('input[type="url"]');
+  const elUrlInput = elModal.querySelector('input[type="url"]')
 
   elNameInput.value = ''
   elPriceInput.value = ''
@@ -107,23 +115,39 @@ function onShowBookDetails(ev, bookId) {
   elBookModal.querySelector('.book-cover-img img').src = book.imgUrl
   elBookModal.querySelector('.book-desc h3').innerText = book.title
   elBookModal.querySelector('.book-desc p').innerText = book.details
-  elBookModal.querySelector('.book-desc span').innerHTML =` ${'⭐️'.repeat(book.rating)}
+  elBookModal.querySelector('.book-desc span').innerHTML = ` ${'⭐️'.repeat(
+    book.rating
+  )}
 `
   elBookModal.showModal()
 }
+
 function onCloseBookDetails() {
   const elBookModal = document.querySelector('.book-details')
   elBookModal.close()
 }
 
-function onSetFilterBy(elSelect) {
-  gFilterBy = elSelect.value
-  render()
+function onSetFilterBy(filterBy) {
+  if (filterBy.title !== undefined) {
+    gQueryOptions.filterBy.title = filterBy.title
+  } else if (filterBy.minRating !== undefined) {
+    gQueryOptions.filterBy.minRating = parseInt(filterBy.minRating) || 0
+  }
+
+  gQueryOptions.page.idx = 0
+
+  renderBooks()
 }
 
 function clearSearch() {
-  onSetFilterBy('')
-  document.querySelector('.search-input').value = ''
+
+  document.querySelector('.filter-by input[type="text"]').value = ''
+  document.querySelector('.filter-by select').value = ''
+
+  gQueryOptions.filterBy.title=''
+  gQueryOptions.filterBy.minRating=0
+
+  renderBooks()
 }
 
 function renderStatics(books) {
