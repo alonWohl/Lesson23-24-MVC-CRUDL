@@ -47,7 +47,7 @@ function _createBook(title, price, imgUrl) {
     price,
     details: ` ${loremIpsum(50)}`,
     imgUrl: imgUrl || 'img/default_book_cover.jpg',
-    rating : 3
+    rating : getRandomIntInclusive(1,5)
   }
 }
 

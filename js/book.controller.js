@@ -107,7 +107,8 @@ function onShowBookDetails(ev, bookId) {
   elBookModal.querySelector('.book-cover-img img').src = book.imgUrl
   elBookModal.querySelector('.book-desc h3').innerText = book.title
   elBookModal.querySelector('.book-desc p').innerText = book.details
-
+  elBookModal.querySelector('.book-desc span').innerHTML =` ${'⭐️'.repeat(book.rating)}
+`
   elBookModal.showModal()
 }
 function onCloseBookDetails() {
