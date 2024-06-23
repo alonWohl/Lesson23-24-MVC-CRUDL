@@ -10,6 +10,7 @@ function onInit() {
 function render() {
   const books = getBooks(gFilterBy)
   const tableBody = document.querySelector('tbody')
+  
 
   tableBody.innerHTML = books
     .map(
@@ -17,6 +18,7 @@ function render() {
         <tr>
             <td>${book.title}</td>
             <td>${book.price}</td>
+            <td>${'⭐️'.repeat(book.rating)}</td>
             <td>
                 <button onclick="onShowBookDetails(event,'${book.id}')" class"read">Read</button>
                 <button onclick="onUpdateBook('${book.id}')" class"update">Update</button>
@@ -28,6 +30,7 @@ function render() {
     .join('')
   renderStatics(books)
 }
+
 
 function onRemoveBook(ev, bookId) {
   ev.stopPropagation()
